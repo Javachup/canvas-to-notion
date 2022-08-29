@@ -1,7 +1,7 @@
 {
-    "notion_token": "secret_Sxk4xNWhqQ4ItUSQ9XZ5Sp9q2LlH5te1Tu13OMEIiWt",
-    "notion_database_id": "1fe147efd1284ac99a2ff6419faa3f64",
-    "canvas_key": "3~fTipqn2LfMzhOT5VdqzVDm7qy5SRD79IY43nTTWjF8oSVjfK8t8fw9Q4z0lQCPlp",
+    "notion_token": "TOKEN GOES HERE",
+    "notion_database_id": "DATA BASE ID GOES HERE",
+    "canvas_key": "CANVAS KEY GOES HERE",
 
     "course_ids":
     [

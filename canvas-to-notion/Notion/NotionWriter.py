@@ -2,9 +2,6 @@ from Notion.Client import Client
 from Notion.Page import Page
 from Notion.Property import Property
 
-TOKEN = 'secret_Sxk4xNWhqQ4ItUSQ9XZ5Sp9q2LlH5te1Tu13OMEIiWt'
-DATABASE_ID = 'f3e79eb9754f4d10b79651dd4d1cfe44'
-
 class NotionWriter:
     def __init__(self, token: str, databaseID: str) -> None:
         self._client = Client(token)
