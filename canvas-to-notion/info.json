@@ -1,0 +1,20 @@
+{
+    "notion_token": "secret_Sxk4xNWhqQ4ItUSQ9XZ5Sp9q2LlH5te1Tu13OMEIiWt",
+    "notion_database_id": "1fe147efd1284ac99a2ff6419faa3f64",
+    "canvas_key": "3~fTipqn2LfMzhOT5VdqzVDm7qy5SRD79IY43nTTWjF8oSVjfK8t8fw9Q4z0lQCPlp",
+
+    "course_ids":
+    [
+        { "id": 1921014, "name": "Place" }
+    ],
+
+    "Possible Assignment Values": [ "id", "name", "desc", "created_at", "updated_at", "due_date", "unlock_at", "course_name", "url", "points" ],
+
+    "property_formats":
+    [
+        { "notion_name": "Name", "notion_type": "title", "assignment_value": "name" },
+        { "notion_name": "Course", "notion_type": "select", "assignment_value": "course_name" },
+        { "notion_name": "Due Date", "notion_type": "date", "assignment_value": "due_date" },
+        { "notion_name": "Canvas Link", "notion_type": "url", "assignment_value": "url" }
+    ]
+}
