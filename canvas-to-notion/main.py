@@ -15,6 +15,10 @@ writer.cache_pages()
 
 # Gets each of the course ids from the info file 
 for course_id_name in info['course_ids']:
+    if course_id_name['ignore']:
+        print(f"Ignoring assignments for course {course_id_name['name']}...")
+        continue
+
     print(f"Reading assignments for course {course_id_name['name']}...")
     assignments = reader.read_course_assignments(course_id_name['id'])
 
