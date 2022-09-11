@@ -1,49 +1,53 @@
+from __future__ import print_function
 import json
 from Notion.Property import Property
 from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
 
-info = {}
-with open('info.json') as f:
-    info = json.load(f)
+import time
 
-reader = CanvasReader(info['canvas_key'])
-writer = NotionWriter(info['notion_token'], info['notion_database_id'])
+def Run(filename):
+    info = {}
+    with open(filename) as file:
+        info = json.load(file)
 
-print("Reading Notion database...")
-writer.cache_pages()
+    reader = CanvasReader(info['canvas_key'])
+    writer = NotionWriter(info['notion_token'], info['notion_database_id'])
 
-# Gets each of the course ids from the info file 
-for course_id_name in info['course_ids']:
-    if course_id_name['ignore']:
-        print(f"Ignoring assignments for course {course_id_name['name']}...")
-        continue
+    print("Reading Notion database...")
+    writer.cache_pages()
 
-    print(f"Reading assignments for course {course_id_name['name']}...")
-    assignments = reader.read_course_assignments(course_id_name['id'])
+    # Gets each of the course ids from the info file 
+    for course_id_name in info['course_ids']:
+        if course_id_name['ignore']:
+            print(f"Ignoring assignments for course {course_id_name['name']}...")
+            continue
 
-    # Processes each of the assignments for the current course 
-    for a in assignments:
-        # Check ignore list 
-        ignored = False
-        for i in info['assignment_ignore_list']:
-            if (a['id'] == i['id']):
-                print(f'    Ignoring assignment "{a["name"]}"...')
-                ignored = True
-                break
-        if ignored: continue
+        print(f"Reading assignments for course {course_id_name['name']}...")
+        assignments = reader.read_course_assignments(course_id_name['id'])
 
-        print(f'    Loading assignment "{a["name"]}"...')
+        # Processes each of the assignments for the current course 
+        for a in assignments:
+            # Check ignore list 
+            ignored = False
+            for i in info['assignment_ignore_list']:
+                if (a['id'] == i['id']):
+                    print(f'    Ignoring assignment "{a["name"]}"...')
+                    ignored = True
+                    break
+            if ignored: continue
 
-        properties = []
+            print(f'    Loading assignment "{a["name"]}"...')
 
-        for format in info['property_formats']:
-            if format['assignment_value'] in a:
-                if a[format['assignment_value']]: # this could be None 
-                    properties.append(Property(format['notion_name'], format['notion_type'], a[format['assignment_value']]))
-            else:
-                raise Exception(f"Assignment value {format['assignment_value']} is not valid!")
+            properties = []
 
-        writer.update_or_append(a['name'], properties)
+            for format in info['property_formats']:
+                if format['assignment_value'] in a:
+                    if a[format['assignment_value']]: # this could be None 
+                        properties.append(Property(format['notion_name'], format['notion_type'], a[format['assignment_value']]))
+                else:
+                    raise Exception(f"Assignment value {format['assignment_value']} is not valid!")
 
-print("\nSuccess!\n")
+            writer.update_or_append(a['name'], properties)
+
+    print("\nSuccess!\n")
