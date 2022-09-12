@@ -7,11 +7,12 @@ Automatically reads in Canvas assignments and writes them into a Notion Database
 
 ## How do I use it? 
 
-The program reads a file called `info.json` to get all the information it needs. You will need to create this and place it in the correct directory. 
+The program reads a file called `info.json` to get all the information it needs. You will need to create this, use the program to navigate to it, then run the program. 
 
 1. Create `info.json` 
 2. Provide info in the correct format 
-3. Run the program and profit 
+3. Select the file with the program 
+4. Run the program and profit 
 
 ## `info.json` format 
 
@@ -115,3 +116,9 @@ Same warning as the Notion Token. This is essentially your login so don't go sha
 2. The database id is in the url to that page 
 [https://www.notion.so/](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**qwertyuiopasdFGHJKLZXCVBNM123456**?v=awsddeggdbbrhers3325regfst3wt560
 It's between the '/' and the '?' as seen above. 
+
+# Finally Using the Program 
+
+First step is to enter the path to the file. Easiest way to do this is to click "Browse" and find the file in there. Once `info.json` has been selected, you can press the "Run Program" button and watch as all your assignments get pulled from canvas and plopped into notion. 
+
+The program simultaneously reads from notion and canvas. Once both have been read, everything will get written to canvas. 
