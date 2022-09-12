@@ -11,7 +11,7 @@ The program reads a file called `info.json` to get all the information it needs.
 
 1. Create `info.json` 
 2. Provide info in the correct format 
-3. Select the file with the program 
+3. Run `main.exe` Select the file with the program 
 4. Run the program and profit 
 
 ## `info.json` format 
@@ -119,6 +119,6 @@ It's between the '/' and the '?' as seen above.
 
 # Finally Using the Program 
 
-First step is to enter the path to the file. Easiest way to do this is to click "Browse" and find the file in there. Once `info.json` has been selected, you can press the "Run Program" button and watch as all your assignments get pulled from canvas and plopped into notion. 
+After running `main.exe`, the first step is to enter the path to the file. Easiest way to do this is to click "Browse" and find the file in there. Once `info.json` has been selected, you can press the "Run Program" button and watch as all your assignments get pulled from canvas and plopped into notion. 
 
 The program simultaneously reads from notion and canvas. Once both have been read, everything will get written to canvas. 
