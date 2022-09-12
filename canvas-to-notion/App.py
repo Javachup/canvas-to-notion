@@ -32,12 +32,22 @@ class App:
         if f == '':
             return
 
-        self.ent_fileNameEntry.delete(0)
+        self.ent_fileNameEntry.delete(0, END)
         self.ent_fileNameEntry.insert(0, f)
 
     def run_thread(self):
         filename = self.ent_fileNameEntry.get()
         file = {}
+
+        extention = os.path.splitext(filename)[1]
+
+        if not extention:
+            print('Path not valid!')
+            return
+
+        if extention != '.json':
+            print('File must be a .json file!')
+            return
 
         try:
             file = open(filename, mode='r')
