@@ -2,19 +2,29 @@ import json
 from Notion.Property import Property
 from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
+from threading import Thread
 
 import time
 
+def cache_pages_wrapper(writer: NotionWriter):
+    writer.cache_pages()
+    print("Notion Database read!")
+
 def Run(file):
+    start = time.time()
+
     info = json.load(file)
 
     reader = CanvasReader(info['canvas_key'])
     writer = NotionWriter(info['notion_token'], info['notion_database_id'])
 
-    print("Reading Notion database...")
-    writer.cache_pages()
+    print("Begining to read Notion Database...")
+    thread = Thread(target=cache_pages_wrapper, args=[writer])
+    thread.start()
 
     # Gets each of the course ids from the info file 
+    processed_assignments = [] # list of tuples containing title strings and properties lists 
+
     for course_id_name in info['course_ids']:
         if course_id_name['ignore']:
             print(f"Ignoring assignments for course {course_id_name['name']}...")
@@ -45,6 +55,14 @@ def Run(file):
                 else:
                     raise Exception(f"Assignment value {format['assignment_value']} is not valid!")
 
-            writer.update_or_append(a['name'], properties)
+            processed_assignments.append((a['name'], properties))
 
-    print("\nSuccess!\n")
+    print("Waiting for notion database...")
+    thread.join()
+
+    print("Writing to notion Database...")
+    for a in processed_assignments:
+        writer.update_or_append(a[0], a[1])
+
+    end = time.time()
+    print(f"\nSuccess! Took {round(end - start, 2)} second(s)\n")

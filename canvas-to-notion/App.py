@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import filedialog as fd
 import tkinterHelper.Console as Console
 from threading import Thread
+import os
 
 import CanvasToNotion as c2n
 
