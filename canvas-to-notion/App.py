@@ -16,6 +16,7 @@ class App:
 
         self.ent_fileNameEntry = Entry(self.window)
         self.ent_fileNameEntry.place(x=70, y=25, width=260)
+        self.ent_fileNameEntry.insert(0, os.getcwd() + "\info.json")
 
         self.btn_run = Button(self.window, text="Run Program", command=self.run_thread)
         self.btn_run.place(x=500, y=20)
