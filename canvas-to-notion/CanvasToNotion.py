@@ -13,7 +13,11 @@ def cache_pages_wrapper(writer: NotionWriter):
 def Run(file):
     start = time.time()
 
-    info = json.load(file)
+    try:
+        info = json.load(file)
+    except json.JSONDecodeError as e:
+        print(f"=== JSON decoder error ===\n{e}")
+        return
 
     reader = CanvasReader(info['canvas_key'])
     writer = NotionWriter(info['notion_token'], info['notion_database_id'])

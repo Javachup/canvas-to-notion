@@ -21,8 +21,11 @@ class Page(NotionObject):
     def _get_property(self, propertyID: str):
         p = self._client.get_property(self.get_page_id(), propertyID)
 
-        if p['object'] == 'list':
-            p = p['results'][0]
+        try:
+            if p['object'] == 'list':
+                p = p['results'][0]
+        except IndexError:
+            print(f"=== Failed to get property {propertyID} ===")
 
         return p
 
