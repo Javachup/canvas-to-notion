@@ -2,7 +2,7 @@ import json
 from Notion.Property import Property
 from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
-from threading import Thread
+from ErrorHandlingThread import ErrorHandlingThread
 
 import time
 
@@ -23,7 +23,7 @@ def Run(file):
     writer = NotionWriter(info['notion_token'], info['notion_database_id'])
 
     print("Begining to read Notion Database...")
-    thread = Thread(target=cache_pages_wrapper, args=[writer])
+    thread = ErrorHandlingThread(target=cache_pages_wrapper, args=[writer])
     thread.start()
 
     # Gets each of the course ids from the info file 
@@ -62,7 +62,12 @@ def Run(file):
             processed_assignments.append((a['name'], properties))
 
     print("Waiting for notion database...")
-    thread.join()
+
+    try:
+        thread.join()
+    # TODO: Handle specific errors 
+    except Exception as e:
+        print(e)
 
     print("Writing to notion Database...")
     for a in processed_assignments:
