@@ -5,6 +5,7 @@ from Canvas.CanvasReader import CanvasReader
 from ErrorHandlingThread import ErrorHandlingThread
 from canvasapi import exceptions
 import Notion.NotionExceptions as ne
+import requests.exceptions
 
 import time
 
@@ -27,8 +28,8 @@ def Run(file):
     except exceptions.InvalidAccessToken:
         print(f"=== Invalid Canvas Token ===")
         return
-    except ConnectionError as e:
-        print(f"=== ConnectionError ==={e}")
+    except requests.exceptions.ConnectionError as e:
+        print(f"=== ConnectionError ===\nMake sure you are connected to the internet\n\n{e}")
         return
 
     # Create Notion Writer 
