@@ -15,3 +15,12 @@ class ErrorHandlingThread(Thread):
 
         if self.error:
             raise self.error
+
+class CallBackThread(Thread):
+    def __init__(self, target, args, callback):
+        super().__init__(target=target, args=args)
+        self.callback = callback
+
+    def run(self):
+        Thread.run(self)
+        self.callback()

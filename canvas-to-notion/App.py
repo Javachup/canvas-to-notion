@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import filedialog as fd
 import tkinterHelper.Console as Console
-from threading import Thread
+from MyThreads import CallBackThread
 import os
 
 import CanvasToNotion as c2n
@@ -57,5 +57,10 @@ class App:
             print('File Not Found!')
             return
 
-        self.thread = Thread(target=c2n.Run, args=[file])
+        self.btn_run["state"] = "disabled"
+
+        self.thread = CallBackThread(target=c2n.Run, args=[file], callback=self.thread_done)
         self.thread.start()
+
+    def thread_done(self):
+        self.btn_run["state"] = "normal"

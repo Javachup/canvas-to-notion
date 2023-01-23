@@ -2,7 +2,7 @@ import json
 from Notion.Property import Property
 from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
-from ErrorHandlingThread import ErrorHandlingThread
+from MyThreads import ErrorHandlingThread
 from canvasapi import exceptions
 import Notion.NotionExceptions as ne
 import requests.exceptions
