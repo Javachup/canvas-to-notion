@@ -8,14 +8,13 @@ class CanvasReader:
 
         self._canvas = Canvas(self._api_url, self._api_key)
 
+        # Check if key is valid 
+        self._canvas.get_accounts()[0]
+
     def read_course_assignments(self, course_id: int, nameDelimiter: str = " - "):
         result = []
 
-        try:
-            course = self._canvas.get_course(course_id)
-        except Exception as e:
-            print(e)
-            return None
+        course = self._canvas.get_course(course_id)
 
         assignments = course.get_assignments()
 

@@ -130,3 +130,5 @@ dmypy.json
 
 # Don't want to push secret keys 
 info.json
+
+canvas-to-notion/info_good.json

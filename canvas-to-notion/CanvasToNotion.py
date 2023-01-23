@@ -3,6 +3,7 @@ from Notion.Property import Property
 from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
 from ErrorHandlingThread import ErrorHandlingThread
+from canvasapi import exceptions
 
 import time
 
@@ -19,7 +20,13 @@ def Run(file):
         print(f"=== JSON decoder error ===\n{e}")
         return
 
-    reader = CanvasReader(info['canvas_key'])
+    # Create Canvas Reader
+    try:
+        reader = CanvasReader(info['canvas_key'])
+    except exceptions.InvalidAccessToken:
+        print(f"=== Invalid Canvas Token ===")
+        return
+
     writer = NotionWriter(info['notion_token'], info['notion_database_id'])
 
     print("Begining to read Notion Database...")
