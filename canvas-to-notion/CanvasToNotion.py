@@ -4,6 +4,7 @@ from Notion.NotionWriter import NotionWriter
 from Canvas.CanvasReader import CanvasReader
 from ErrorHandlingThread import ErrorHandlingThread
 from canvasapi import exceptions
+import Notion.NotionExceptions as ne
 
 import time
 
@@ -26,8 +27,23 @@ def Run(file):
     except exceptions.InvalidAccessToken:
         print(f"=== Invalid Canvas Token ===")
         return
+    except ConnectionError as e:
+        print(f"=== ConnectionError ==={e}")
+        return
 
-    writer = NotionWriter(info['notion_token'], info['notion_database_id'])
+    # Create Notion Writer 
+    try:
+        writer = NotionWriter(info['notion_token'], info['notion_database_id'])
+    except ne.DatabaseQueryError as e:
+        if e.error == "validation_error":
+            print(f"=== Invalid Database ID ===\n{e}")
+        if e.error == "object_not_found":
+            print(f"=== Could not find Database ===\n{e}")
+        if e.error == "unauthorized":
+            print(f"=== Invalid Notion Token ===\n{e}")
+        else:
+            print(f"=== Failed to query Notion database! ===\n{e}")
+        return
 
     print("Begining to read Notion Database...")
     thread = ErrorHandlingThread(target=cache_pages_wrapper, args=[writer])
@@ -73,12 +89,19 @@ def Run(file):
     try:
         thread.join()
     # TODO: Handle specific errors 
+    except ne.DatabaseQueryError as e:
+        print(f"=== Failed to query Notion database! ===\n{e}")
+        return
     except Exception as e:
         print(e)
 
     print("Writing to notion Database...")
     for a in processed_assignments:
-        writer.update_or_append(a[0], a[1])
+        try:
+            writer.update_or_append(a[0], a[1])
+        except ne.DatabaseQueryError as e:
+            print(f"=== Failed to query Notion database! ===\n{e}")
+            return
 
     end = time.time()
     print(f"\nSuccess! Took {round(end - start, 2)} second(s)\n")

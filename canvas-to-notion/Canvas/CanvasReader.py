@@ -9,7 +9,7 @@ class CanvasReader:
         self._canvas = Canvas(self._api_url, self._api_key)
 
         # Check if key is valid 
-        self._canvas.get_accounts()[0]
+        self._canvas.get_accounts()._get_next_page()
 
     def read_course_assignments(self, course_id: int, nameDelimiter: str = " - "):
         result = []

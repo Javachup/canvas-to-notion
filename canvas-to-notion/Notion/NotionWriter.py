@@ -8,6 +8,9 @@ class NotionWriter:
         self._databaseID = databaseID
         self.pages = None
 
+        # check if token and ID is good 
+        self._client.query_database(self._databaseID, pageSize=1)
+
     def update_or_append(self, title: str, properties: list[Property]):
         if self.pages == None: self.cache_pages()
 
